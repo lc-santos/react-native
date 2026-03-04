@@ -76,17 +76,17 @@ const styles = StyleSheet.create({
   },
 
   botaoPersonalizado: {
-  backgroundColor: "gray", // Cor de fundo personalizada
-  width: "50px",               // Largura [cite: 122]
-  padding: 15,                // Espaçamento interno
-  borderRadius: 8,            // Cantos arredondados [cite: 113]
-  alignItems: "center",       // Centraliza o texto [cite: 95]
-  marginVertical: 10,         // Margem [cite: 124]
+  backgroundColor: "gray",
+  width: "50px",              
+  padding: 15,               
+  borderRadius: 8,            
+  alignItems: "center",       
+  marginVertical: 10,         
 },
 textoBotao: {
-  color: "#FFF",              // Cor do texto
-  fontSize: 15,               // Tamanho da fonte [cite: 129]
-  fontWeight: "bold",         // Negrito [cite: 130]
+  color: "#FFF",             
+  fontSize: 15,               
+  fontWeight: "bold",         
 },
 
   resultado: {
