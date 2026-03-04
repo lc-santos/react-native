@@ -1,0 +1,64 @@
+import React, { useState } from 'react'; // 1. Importar o useState
+import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+
+export default function App() {
+  // 2. Criar um estado para armazenar o texto digitado
+  const [nome, setNome] = useState('');
+
+  // 3. Função para o botão
+  const handleSave = () => {
+    if (nome === "") {
+      Alert.alert("Erro", "Digite algo antes de salvar!");
+    } else {
+      Alert.alert("Sucesso", `O nome "${nome}" foi salvo!`);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.texto}>Welcome!</Text>
+
+      <TextInput 
+        style={styles.input}
+        placeholder="Digite algo aqui..."
+        placeholderTextColor="#666"
+        onChangeText={setNome} // 4. Atualiza o estado conforme digita
+        value={nome}           // 5. O input mostra o que está no estado
+      />
+
+      <View style={styles.buttonContainer}>
+        <Button 
+          title="Salvar" 
+          onPress={handleSave} // 6. Chama a função ao clicar
+          color="#27F5F2"
+        />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000000"
+  },
+  texto: {
+    fontSize: 30,
+    color: '#27F5F2',
+    marginBottom: 20
+  },
+  input: {
+    backgroundColor: '#C7C7C7',
+    textAlign: "center",
+    width: "80%", // Aumentei um pouco para melhor usabilidade
+    height: 45,   // Altura fixa é geralmente melhor que porcentagem para inputs
+    borderRadius: 8,
+    color: "#821731",
+    marginBottom: 20
+  },
+  buttonContainer: {
+    width: "80%"
+  }
+});
