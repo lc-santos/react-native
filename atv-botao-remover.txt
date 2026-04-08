@@ -1,0 +1,175 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Button, ScrollView } from 'react-native';
+
+export default function App() {
+  const [login, setLogin] = useState('');
+  const [senha, setSenha] = useState('');
+  const [mensagem, setMensagem] = useState('');
+  const [tela, setTela] = useState('');
+
+  const [alunos, setAlunos] = useState([]);
+  const [nome, setNome] = useState('');
+  const [idade, setIdade] = useState('');
+  const [curso, setCurso] = useState('');
+
+  // --- Funções de Navegação e Login ---
+  function validarLogin() {
+    setMensagem('');
+    if (login === "admin" && senha === "123456") {
+      setTela('mudar');
+    } else {
+      setMensagem('Login ou senha incorretos.');
+    }
+  }
+
+  function voltarTela() {
+    setTela('');
+    setLogin('');
+    setSenha('');
+    setMensagem('');
+  }
+
+  // --- Funções de Alunos ---
+  function cadastrarAluno() {
+    if (nome && idade && curso) {
+      const novoAluno = { nome, idade, curso };
+      setAlunos([...alunos, novoAluno]);
+      setNome('');
+      setIdade('');
+      setCurso('');
+    }
+  }
+
+  function removerAluno(index) {
+    const novaLista = alunos.filter((_, i) => i !== index);
+    setAlunos(novaLista);
+  }
+
+  // --- Renderização de Telas ---
+  if (tela === 'mudar') {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.texto}>Cadastre o Aluno!</Text>
+
+        <Text>Nome:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Digite o nome"
+          value={nome}
+          onChangeText={setNome}
+        />
+
+        <Text>Idade:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Digite a idade"
+          value={idade}
+          onChangeText={setIdade}
+        />
+
+        <Text>Curso:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Digite o curso"
+          value={curso}
+          onChangeText={setCurso}
+        />
+
+        <Button title="Cadastrar Aluno" onPress={cadastrarAluno} />
+
+        <ScrollView style={styles.scroll}>
+          {alunos.map((aluno, index) => (
+            <View key={index} style={styles.info}>
+              <Text style={styles.cardTitulo}>Aluno(a) #{index + 1}</Text>
+              <Text>Nome: {aluno.nome}</Text>
+              <Text>Idade: {aluno.idade}</Text>
+              <Text>Curso: {aluno.curso}</Text>
+              <View style={styles.espacamento}>
+                <Button title="Excluir" color="red" onPress={() => removerAluno(index)} />
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+
+        <Button title="Sair" onPress={voltarTela} />
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titulo}>Tela de Login</Text>
+
+      <Text>Login:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Digite o login"
+        value={login}
+        onChangeText={setLogin}
+      />
+
+      <Text>Senha:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Digite a senha"
+        value={senha}
+        onChangeText={setSenha}
+        secureTextEntry={true}
+      />
+
+      <Button title="Entrar" onPress={validarLogin} />
+
+      <Text style={styles.erro}>{mensagem}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    backgroundColor: 'gray',
+    flex: 1,
+    paddingTop: 40,
+  },
+  scroll: {
+    width: '100%',
+    marginVertical: 10,
+  },
+  info: {
+    margin: 10,
+    padding: 15,
+    borderRadius: 5,
+    borderWidth: 1,
+    backgroundColor: "#f5f0f0",
+  },
+  cardTitulo: {
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  espacamento: {
+    marginTop: 10,
+  },
+  input: {
+    textAlign: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+    marginTop: 5,
+    marginBottom: 10,
+    width: 250,
+    padding: 8,
+  },
+  titulo: {
+    fontSize: 25,
+    color: '#fff',
+    marginBottom: 20,
+  },
+  texto: {
+    fontSize: 18,
+    color: '#fff',
+    marginBottom: 10,
+  },
+  erro: {
+    color: 'yellow',
+    marginTop: 10,
+  }
+});
